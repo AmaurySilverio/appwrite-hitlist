@@ -1,8 +1,7 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3002/contacts";
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
+  const request = axios.get(`${import.meta.env.VITE_baseUrl}/contacts`);
   const nonExisting = {
     id: 10000,
     firstName: "Jose",
@@ -16,16 +15,24 @@ const getAll = () => {
 };
 
 const create = (newObject) => {
-  const request = axios.post(baseUrl, newObject);
+  const request = axios.post(
+    `${import.meta.env.VITE_baseUrl}/contacts`,
+    newObject
+  );
   return request.then((response) => response.data);
 };
 
 const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject);
+  const request = axios.put(
+    `${import.meta.env.VITE_baseUrl}/contacts/${id}`,
+    newObject
+  );
   return request.then((response) => response.data);
 };
 const remove = (id) => {
-  const request = axios.delete(`${baseUrl}/${id}`);
+  const request = axios.delete(
+    `${import.meta.env.VITE_baseUrl}/contacts/${id}`
+  );
   return request.then((response) => response.data);
 };
 export default {
