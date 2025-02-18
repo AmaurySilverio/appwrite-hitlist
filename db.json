@@ -82,14 +82,14 @@
       "name": "efw",
       "location": "aefw",
       "position": "lrgw",
-      "priority": false
+      "priority": true
     },
     {
       "id": "16c1",
       "name": "egw",
       "location": "rgwg",
       "position": "gewrg",
-      "priority": false
+      "priority": true
     },
     {
       "id": "bee9",
