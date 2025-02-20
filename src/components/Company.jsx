@@ -13,7 +13,7 @@ const Company = ({
       <i
         className={star}
         style={{ color: "#FFD43B" }}
-        onClick={() => toggleImportance(company.id)}
+        onClick={() => toggleImportance(company.$id)}
       ></i>
       {/* <button onClick={() => removeCompany(company.id)}>Delete</button> */}
     </li>

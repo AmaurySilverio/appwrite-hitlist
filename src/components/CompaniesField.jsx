@@ -5,6 +5,7 @@ const CompaniesField = ({
   removeCompany,
   showCompanyDetails,
 }) => {
+  console.log(companiesToShow);
   return (
     <ul>
       {companiesToShow.length < 1 ? (
@@ -12,7 +13,7 @@ const CompaniesField = ({
       ) : (
         companiesToShow.map((company) => (
           <Company
-            key={company.id}
+            key={company.$id}
             company={company}
             toggleImportance={toggleImportance}
             showCompanyDetails={showCompanyDetails}

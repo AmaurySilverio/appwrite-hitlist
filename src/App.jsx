@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import companyService from "./services/companies";
 import Navbar from "./components/Navbar";
-import CompanyForm from "./CompanyForm";
+import CompanyForm from "./components/CompanyForm";
 import Filter from "./components/Filter";
 import CompaniesField from "./components/CompaniesField";
 import Notification from "./components/Notification";
@@ -58,16 +57,21 @@ function App() {
       ? companies.filter((company) => company.priority)
       : filteredCompanies.filter((company) => company.priority);
 
-  const toggleImportanceOf = (id) => {
-    const company = companies.find((c) => c.id === id);
+  const toggleImportanceOf = ($id) => {
+    const company = companies.find((c) => c.$id === $id);
     const changedCompany = { ...company, priority: !company.priority };
+    const priorityOject = { priority: changedCompany.priority };
+    // MOVE THE ABOVE CONST VARIABLE TO NEW PROJECT AND MAKE SURE TO CHANGE UPDATE
+    // METHOD BELOW SO IT ALSO PASSES PRIORITYOBJECT AS VARIABLE TO APPWRITE!
     companyService
-      .update(id, changedCompany)
+      .update($id, priorityOject)
       .then((returnedCompany) => {
-        setCompanies(companies.map((c) => (c.id === id ? returnedCompany : c)));
+        setCompanies(
+          companies.map((c) => (c.$id === $id ? returnedCompany : c))
+        );
         if (filteredCompanies.length > 0) {
           setFilteredCompanies(
-            filteredCompanies.map((c) => (c.id === id ? returnedCompany : c))
+            filteredCompanies.map((c) => (c.$id === $id ? returnedCompany : c))
           );
         }
         if (clickedCompany) {
@@ -83,10 +87,10 @@ function App() {
           setModal(false);
           setErrorMessage("");
         }, 5000);
-        setCompanies(companies.filter((c) => c.id !== id));
+        setCompanies(companies.filter((c) => c.$id !== $id));
         if (filteredCompanies.length > 0) {
           setFilteredCompanies(
-            filteredCompanies.map((c) => (c.id === id ? returnedCompany : c))
+            filteredCompanies.map((c) => (c.$id === $id ? returnedCompany : c))
           );
         }
       });
@@ -127,6 +131,7 @@ function App() {
     companyService
       .create(companyObject)
       .then((returnedCompany) => {
+        console.log(returnedCompany);
         setCompanies(companies.concat(returnedCompany));
         setNewCompany("");
         setNewLocation("");
@@ -145,19 +150,24 @@ function App() {
       });
   };
 
-  const removeCompany = (id) => {
+  const removeCompany = ($id) => {
+    console.log($id);
     setConfirmationModal(true);
-
-    // Store the function in a variable to pass the ID at confirmation time
+    console.log($id);
+    // Store the function in a variable to pass the $id at confirmation time
     const handleConfirmDeletion = () => {
+      console.log($id);
       companyService
-        .remove(id)
+        .remove($id)
         .then(() => {
-          setCompanies(companies.filter((c) => c.id !== id));
+          console.log($id);
+          setCompanies(companies.filter((c) => c.$id !== $id));
           setCompanyDetailsModal(false);
           setClickedCompany(null);
           if (filteredCompanies.length > 0) {
-            setFilteredCompanies(filteredCompanies.filter((c) => c.id !== id));
+            setFilteredCompanies(
+              filteredCompanies.filter((c) => c.$id !== $id)
+            );
           }
         })
         .catch((error) => {
@@ -167,9 +177,11 @@ function App() {
             setModal(false);
             setErrorMessage("");
           }, 5000);
-          setCompanies(companies.filter((c) => c.id !== id));
+          setCompanies(companies.filter((c) => c.$id !== $id));
           if (filteredCompanies.length > 0) {
-            setFilteredCompanies(filteredCompanies.filter((c) => c.id !== id));
+            setFilteredCompanies(
+              filteredCompanies.filter((c) => c.$id !== $id)
+            );
           }
         });
 
@@ -201,7 +213,6 @@ function App() {
   };
   const handleSearchChange = (event) => {
     const searchTerm = event.target.value;
-    console.log(searchTerm);
     setNewSearch(searchTerm);
 
     if (searchTerm.trim() === "") {
@@ -216,8 +227,6 @@ function App() {
     }
   };
   function filterByCompanyOrLocation(company, searchTerm) {
-    console.log(company);
-    console.log(searchTerm);
     return (
       company.name.toUpperCase().includes(searchTerm.toUpperCase().trim()) ||
       company.location.toUpperCase().includes(searchTerm.toUpperCase().trim())

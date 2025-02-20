@@ -43,12 +43,12 @@ const ContactDetails = ({
         <i
           className={star}
           style={{ color: "#FFD43B" }}
-          onClick={() => toggleImportance(contact.id)}
+          onClick={() => toggleImportance(contact.$id)}
         ></i>
         <button autoFocus onClick={closeContactDetailsModal}>
           Close
         </button>
-        <button onClick={() => removeContact(contact.id)}>Delete</button>
+        <button onClick={() => removeContact(contact.$id)}>Delete</button>
       </div>
     </dialog>
   );

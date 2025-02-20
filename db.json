@@ -98,6 +98,22 @@
       "position": "ldafs",
       "description": "asdo",
       "priority": false
+    },
+    {
+      "id": "d849",
+      "name": "estatt",
+      "location": "agege",
+      "position": "fasfdsasf",
+      "description": "rgerggw",
+      "priority": true
+    },
+    {
+      "id": "be35",
+      "name": "bustdown",
+      "location": "dasfe",
+      "position": "asfe",
+      "description": "word",
+      "priority": false
     }
   ],
   "contacts": [
@@ -129,7 +145,7 @@
       "twitter": "",
       "github": "",
       "notes": "",
-      "priority": true
+      "priority": false
     }
   ]
 }
